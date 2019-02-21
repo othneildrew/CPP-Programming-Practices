@@ -29,7 +29,7 @@ int main(void)
 	// Code written by: Othneil Drew
 
 	/***
-	* Output Explaination: 
+	* Output Explanation: 
 	* The program filled the output with leading zeros/spaces if the output was less than the available spaces.
 	* If the output was greater, it showed the number and an exponent.
 	*/
