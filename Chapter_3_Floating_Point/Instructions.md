@@ -13,4 +13,5 @@
 11. Write a C++ program to read three numbers and display them. Use double type. Use setw(15) and right manipulator object: Explain the effect of using both setw(15) and right manipulator object on outplut.
 
 **Employee:**
+
 12. Write a C++ program to read weekly hours and rate per hour of an employee and display them. Use type float. Format the output using setw().
