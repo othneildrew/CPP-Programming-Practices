@@ -19,7 +19,7 @@ int main(void)
     
     // Shift number 2 bits to the left
     Shift_Left = Number << 2;
-    cout << Number << " shifted 2 bits left = " << Shift_Left << endl;;
+    cout << Number << " shifted 2 bits left = " << Shift_Left << endl;
     
     system("pause");
     return 0;
