@@ -1,4 +1,4 @@
-// Chapter 5: Program 2
+// Chapter 5: Program 3
 
 /***
 Write a C++ program to read an integer number. Display if the number is
