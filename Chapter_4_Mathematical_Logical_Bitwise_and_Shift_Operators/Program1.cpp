@@ -1,10 +1,7 @@
 // Chapter 4: Program 1
-
-/***
-Write a C++ program to read two negative numbers. Display two numbers.
-Find absolute value of each number using abs(input) function of math.h
-library.
-***/ 
+// Write a C++ program to read two negative numbers. Display two numbers
+// Find absolute value of each number using abs(input) function of math.h
+// library
 
 #include <iostream>
 #include <math.h>
