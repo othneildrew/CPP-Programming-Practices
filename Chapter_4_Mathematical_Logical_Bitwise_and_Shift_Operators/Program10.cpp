@@ -1,4 +1,4 @@
-// Chapter 4: Program 9
+// Chapter 4: Program 10
 
 /***
 Write a C++ program to read a number as type of short integer. Shift the number
