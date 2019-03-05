@@ -2,7 +2,7 @@
 
 /***
 Write a C++ program to read a number as type of short integer. Shift the number
-3 bits to the left, and display the output.
+3 bits to the left and display the output.
 **/ 
 
 # include <iostream>
