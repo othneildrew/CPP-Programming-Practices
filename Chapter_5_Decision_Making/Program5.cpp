@@ -1,10 +1,8 @@
 // Chapter 5: Program 5
 
 /***
-Write a C++ program to read a real number. Use type casting to convert it to
-integer. If this number is divisible by three and it is even, then display that
-it is divisible by 6. If it is divisible by three and it is odd number, then
-it is divisible by 3. Otherwise, display the number.
+Write a C++ program to read read four resistors' value, in ohms, which are connected in series.
+Compute total resistor, and display it.
 **/ 
 
 # include <iostream>
