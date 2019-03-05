@@ -28,9 +28,9 @@ int main(void)
     Result = pow(B, 2) + pow(C, 2);
     
     if(pow(A, 2) == Result) {
-        cout << "Is right triangle? - True \n";
+        cout << "\n Is right triangle? - True";
     } else {
-        cout << "Is right triangle? - False";   
+        cout << "\n Is right triangle? - False";   
     }
     
     system("pause");
