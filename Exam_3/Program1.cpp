@@ -9,34 +9,44 @@
 # include <iomanip>
 using namespace std;
 
+float Read_Data(void), Compute_Average_Grade(float);;
+void Display_Data(float);
+
 int main(void) {
 
-	int LCV, Size = 234;
-	float Exam_Grade = 0, Course_Grade, GPA = 0;
+	int Size = 1;
+	float Exam_Grade, Course_Grade;
 
 	cout << "\n\t This program displays average course grade and GPA given three exams for each course \n";
 
 	// Start loop to calculate for each student (total of Size)
-	for (LCV = 0; LCV < Size; LCV++) {
+	for (int LCV = 1; LCV <= Size; LCV++) {
 
-		cout << "\n\t CALCULATING INFORMATION FOR STUDENT #" << LCV + 1 << "\n";
+		cout << "\n\t CALCULATING INFORMATION FOR STUDENT #" << LCV << "\n";
 
-		int i = 0;
-		Course_Grade = 0;
+		
+		for (int LCV = 0; LCV < 4; LCV++) {
 
-		while (i < 5) {
+			cout << "\n\t Course #" << LCV + 1 << "\n";
 
-			cout << "\t Enter grade for course #" << i + 1 << ": ";
-			cin >> Course_Grade;
-			Exam_Grade += Course_Grade;
-			i++;
+			int i = 0;
+			Course_Grade = 0;
+			Exam_Grade = 0;
+
+			while (i < 5) {
+
+				cout << "\t Enter grade for exam #" << i + 1 << ": ";
+				Course_Grade = Read_Data();
+				Exam_Grade += Course_Grade;
+				i++;
+			}
+
+			Course_Grade = Compute_Average_Grade(Exam_Grade);
+
+			// Display average course
+			cout << "\n\t Average Course Grade = " << Course_Grade << "%" << endl;
 		}
-
-		Course_Grade = Exam_Grade / 5;
-
-		// Display average course grade and gpa for student
-		cout << "\n\t Average Course Grade = " << Course_Grade << endl;
-		cout << "\t GPA = " << fixed << setprecision(2) << GPA << endl;
+		
 	}
 
 	system("pause");
@@ -44,3 +54,17 @@ int main(void) {
 }
 
 // Code written by: Othneil Drew
+
+float Read_Data() {
+	int data;
+	cin >> data;
+	return data;
+}
+
+void Display_Data(float data) {
+	cout << data << endl;
+}
+
+float Compute_Average_Grade(float grade) {
+	return grade / 5;
+}
