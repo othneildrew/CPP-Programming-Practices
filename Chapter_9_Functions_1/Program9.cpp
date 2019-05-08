@@ -4,7 +4,7 @@
 Write a C++ menu driven program to simulate a vending machine using functions. The vending machine has the following items: (1) Coke $0.95, (2) Doritos $0.75, (3) Snickers $0.55, (4) Chex Mix $0.60, (5) Pepsi $0.90. Maximum capacity for each item is 30.
 
 Further Instructions:
-The machine accepts quarters, dimes, and nickels, and $1 or $5 bills. There are there different containers for each coin. There should be at least 20 nickels, 20 dimes, and 20 quaters in each container. If each container has more than 100 coins, then remove coins from container and leave only 20 coins. If amount of $1 bills exceeds $100, then remove the $1 bills and leave twenty $1 bills in the container. If amount of $bills exceed $300, then remove $5 bills and leave twenty $5 bills in the container. 
+The machine accepts quarters, dimes, and nickels, and $1 or $5 bills. There are there different containers for each coin. There should be at least 20 nickels, 20 dimes, and 20 quarters in each container. If each container has more than 100 coins, then remove coins from container and leave only 20 coins. If amount of $1 bills exceeds $100, then remove the $1 bills and leave twenty $1 bills in the container. If amount of $bills exceed $300, then remove $5 bills and leave twenty $5 bills in the container. 
 
 The cost of the items is 35% of the selling price.
 
@@ -21,13 +21,14 @@ Your program must have at least the following functions: (1) main function; (2) 
 # include <iostream>;
 # include <string>;
 # include <math.h>;
+# include <iomanip>;
 using namespace std;
 
 
-int Selected_Item, Quarts_Qty, Dimes_Qty, Nickels_Qty;
-bool Machine_State = false, Coin_Valid(double);
-double Read_Data(void), Return_Change(double), Check_Price(int);
-void Machine_ON(void), Machine_OFF(void), Display_Menu(void), Refill_Snacks(void), Refill_Coins(void), Remove_Coins(void), Display_Info(string, double);
+int Selected_Item, Quarts_Qty, Dimes_Qty, Nickels_Qty, Coke_Qty = 30, Doritos_Qty = 30, Snickers_Qty = 30, Chex_Qty = 30, Pepsi_Qty = 30;
+bool Machine_State = false;
+double Read_Data(void), Return_Change(double), Check_Price(int), Valid_Coins(double), Compute_Cost(double), Compute_Labor(double), Compute_Overhead(double), Compute_Profit(double);
+void Machine_ON(void), Machine_OFF(void), Display_Menu(void), Refill_Snacks(void), Refill_Coins(void), Remove_Coins(void), Display_Info(double);
 
 int main(void) {
 
@@ -37,12 +38,17 @@ int main(void) {
 	// Check if machine is ON, turn ON if it is not
 	if (!Machine_State) {
 		Machine_ON();
-		// TODO: set a timer for 6 hours -> 21600 seconds
-			// if timer is finished and not vending a snack, call Machine_OFF()
+		// TODO:
+			// set a timer for 1 hour -> 3600 seconds
+				// when timer is finished, calculate all sales for that hour by calling Sales_Per_Hour()
+			// set a timer for 6 hours -> 21600 seconds
+				// when timer is finished and not vending a snack, call Machine_OFF()
+			// set a timer for 24 hours -> 86400 seconds
+				// when timer is finished, call Sales_Per_Day()
 	}
 
 	// Show if the machine is ON/OFF
-	cout << "\n\t The machine is now ->" << Machine_State << endl;
+	cout << "\n\t The machine is now -> " << Machine_State << endl;
 
 	while (Machine_State) {
 		Payment = 0;
@@ -70,55 +76,57 @@ int main(void) {
 		else {
 			// Ask for payment
 			Item_Price = Check_Price(Selected_Item);
+			double Price_Remaining = Item_Price;
 
 			do {
-				cout << "\n Enter payment amount: $";
+				cout << "\n # Balance: $";
+				Display_Info(Price_Remaining);
+
+				cout << "\n ### Enter payment: $";
 				double Coin = Read_Data();
 				
-				if (Coin_Valid(Coin)) {
-					Payment += Coin;
-				}
+				Payment += Valid_Coins(Coin);
+				Price_Remaining -= Valid_Coins(Coin);
+				
+
 			} while (Payment < Item_Price);
 
-			// Process payment and issue if change if necessary
+			// Calculate change to return
 			double change = Item_Price - Payment;
 
+			cout << "\n\n ******************* TRANSACTION COMPLETED *******************" << endl;
+			cout << "\t Selected Item: " << Selected_Item;
+			
+			cout << "\t Item price: $";
+			Display_Info(Item_Price);
+
+			cout << "\t Your Payment: $";
+			Display_Info(Payment);
+
+			// Return any change if necessary
 			if (change > 0) {
 				Return_Change(change);
+
+				cout << "\t Your Change: $";
+				Display_Info(change);
 			}
 
+			cout << "\t Other Details:" << endl;
+			cout << "\t Item Cost $";
+			Display_Info(Compute_Cost(Item_Price));
 
+			cout << "\t Labor Cost $";
+			Display_Info(Compute_Labor(Item_Price));
 
+			cout << "\t Overhead Cost $";
+			Display_Info(Compute_Overhead(Item_Price));
 
-			cout << "********************************************************************************************" << endl;
-			Display_Info("Selected Item", Selected_Item);
-			Display_Info("Item price", Item_Price);
-			Display_Info("Payment", Payment);
+			cout << "\t Item Profit $";
+			Display_Info(Compute_Profit(Item_Price));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			cout << "******************* THANK YOU FOR YOUR PURCHASE *******************" << endl;
 		}
 	}
-
 
 	system("pause");
 	return 0;
@@ -144,6 +152,10 @@ void Machine_OFF(void) {
 }
 
 double Return_Change(double change) {
+	// Determine how much change to give by checking if the amount needed will be quarters, dimes, or nickels
+	// Give quarters from quantity
+		// If not enough quarts, return remaining change from dimes
+		// If not enough dimes, return remaining change from nickels
 	return 0;
 }
 
@@ -159,7 +171,11 @@ void Display_Menu(void) {
 }
 
 void Refill_Snacks(void) {
-	
+	Coke_Qty = 30;
+	Doritos_Qty = 30;
+	Snickers_Qty = 30;
+	Chex_Qty = 30;
+	Pepsi_Qty = 30;
 }
 
 void Refill_Coins(void) {
@@ -169,15 +185,19 @@ void Refill_Coins(void) {
 }
 
 // Checks if coin entered is at least a nickel
-bool Coin_Valid(double coin) {
-	if ((coin - 0.05) < 1) {
-		return true;
+double Valid_Coins(double coin) {
+	double Foreign_Coins = remainder(coin, 0.05);
+
+	if (Foreign_Coins < 0.05) {
+		return coin - Foreign_Coins;
 	}
-	return false;
+	return 0;
 }
 
 void Remove_Coins(void) {
-
+	Quarts_Qty = 20;
+	Dimes_Qty = 20;
+	Nickels_Qty = 20;
 }
 
 
@@ -209,47 +229,49 @@ double Check_Price(int item) {
 	return price;
 }
 
+double Compute_Cost(double price) {
+	return price * 0.35;
+}
+
+double Compute_Labor(double price) {
+	return price * 0.25;
+}
+
+double Compute_Overhead(double price) {
+	return price * 0.05;
+}
+
+double Compute_Profit(double price) {
+	double operating_cost = 0;
+
+	operating_cost += Compute_Cost(price);
+	operating_cost += Compute_Labor(price);
+	operating_cost += Compute_Overhead(price);
+
+	return price - operating_cost;
+}
+
+/*
+	double Sales_Per_Hour () {
+		// Create a variable for each hour or an array
+		// Check for missing quantity of each item
+		// Run loop to calculate sales for each item in loop that is missing
+		// Fill array or variable with sales for specific hour
+		// Refill the machine when finished by calling Refill_Snacks()
+	}
+
+	double Sales_Per_Day () {
+		// Run loop to compute sum of all variables or array values generated by Sales_Per_Hour()
+	}
 
 
+*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void Display_Info(string text, double data) {
-	cout << "\t " << text << " = " << data << endl;
+void Display_Info(double data) {
+	cout << setprecision(2) << showpoint << setw(3) << right << data << endl;
 }
 
 // Code written by: Othneil Drew
 // https://github.com/othneildrew/CPP-Programming-Practices
+/* Notee: Ideally, I would've wrote this program using C++ data structures like an object or array and made use of loops based on the size of those structures to obtain and set various data like quantities, but the scope of this course does not cover those topics so I wrote the program using methods and techniques learned in the course. */
