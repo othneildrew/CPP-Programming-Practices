@@ -14,7 +14,7 @@ void Display_Data(float);
 
 int main(void) {
 
-	int Size = 1;
+	int Size = 234;
 	float Exam_Grade, Course_Grade;
 
 	cout << "\n\t This program displays average course grade and GPA given three exams for each course \n";
