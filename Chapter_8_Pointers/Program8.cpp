@@ -17,7 +17,8 @@ int main(void)
 	cout << "\n Please enter a name:" << endl;
 	cin >> Name1;
 
-	cout << "Const Name Displayed:" << Name1 << endl;
+	cout << "\t Const Name displayed via variable:" << Name1 << endl;
+	cout << "\t Name displayed via pointer to constant:" << *Ptr1_to_Const << endl;
 
 	system("pause");
 	return 0;
